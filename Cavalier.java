@@ -1,5 +1,8 @@
-
 public class Cavalier extends Piece {
+	
+	/*
+	 Constructeur
+	 */
 	public Cavalier(boolean blanc, int ligne, int colonne) {
 		super(blanc, ligne, colonne);
 		if (blanc) {
@@ -9,12 +12,17 @@ public class Cavalier extends Piece {
 		}
 	}
 	
+	/*
+	 Vérification du déplacement du cavalier
+	 */
 	public boolean peutSeDeplacer (int ligneArrivee, int colonneArrivee, Plateau plateau) {
 		
+		//On vérifie si sa case d'arrivée est sa case de départ
 		if (this.ligne == ligneArrivee && this.colonne == colonneArrivee) {
 			return false;
 		}
 
+		//Si le cavalier veut manger une pièce, on vérifie si la pièce d'arrivée est de la même couleur
 		Piece pieceArrivee = plateau.getPiece(ligneArrivee, colonneArrivee);
 		if (pieceArrivee != null && pieceArrivee.isBlanc() == this.isBlanc()) {
             return false;

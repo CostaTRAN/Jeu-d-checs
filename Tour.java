@@ -3,6 +3,9 @@ import java.util.ArrayList;
 public class Tour extends Piece {
 	private boolean premierCoup;
 	
+	/*
+	 Constructeur
+	 */
 	public Tour(boolean blanc, int ligne, int colonne) {
 		super(blanc, ligne, colonne);
 		if (blanc) {
@@ -12,11 +15,17 @@ public class Tour extends Piece {
 		}
 		premierCoup = true;
 	}
-
+	
+	/*
+	 Getter
+	 */
 	public boolean isPremierCoup() {
 		return premierCoup;
 	}
 	
+	/*
+	 Vérification du déplacement de la tour
+	 */
 	public boolean peutSeDeplacer(int ligneArrivee, int colonneArrivee, Plateau plateau) {
 		
 		if (this.ligne == ligneArrivee && this.colonne == colonneArrivee) {
@@ -82,6 +91,9 @@ public class Tour extends Piece {
 		return true;
 	}
 	
+	/*
+	 Après son premier déplacement, son premier coup devient false
+	 */
 	public void deplacer(Coup coup, Plateau plateau, ArrayList<Coup> historiqueDesCoups) {
 		super.deplacer(coup, plateau, historiqueDesCoups);
 		if(premierCoup)

@@ -47,22 +47,7 @@ public class Plateau {
 		cases[6][4] = new Pion(false,6,4);
 		cases[6][5] = new Pion(false,6,5);
 		cases[6][6] = new Pion(false,6,6);
-		cases[6][7] = new Pion(false,6,7);  
-		
-		
-		//cases[4][3] = new Case(4,3,new Dame(false));
-		//cases[3][3] = new Case(3,3,new Fou(true));
-		//cases[1][0] = new Pion(false,1,0);
-		//cases[4][4] = new Pion(true,4,4);
-		
-		/*Vérification promotion
-		cases[6][0] = new Pion(true,6,0);
-		
-		/*Vérification PAT
-		cases[6][0] = new Dame(true, 6, 0);
-		cases[1][3] = new Tour(true, 1, 3);
-		cases[1][5] = new Tour(true, 1, 5);
-		cases[7][0] = new Pion(false, 7, 0);*/
+		cases[6][7] = new Pion(false,6,7);
 	} 
 	
 	/*
@@ -89,7 +74,7 @@ public class Plateau {
 	}
 	
 	/*
-	 getters et setters
+	 Une méthode pour récuperer une pièce à une case précise
 	 */
 	
 	public Piece getPiece(int ligne, int colonne) {
@@ -99,6 +84,10 @@ public class Plateau {
 		return cases[ligne][colonne];
 	}
 	
+	/*
+	 Une méthode pour placer une pièce à une case précise
+	 */
+	
 	public void setPiece(int ligne, int colonne, Piece piece) {
 		if (ligne>7 || ligne<0 || colonne>7 || colonne<0) {
 			return;
@@ -106,6 +95,9 @@ public class Plateau {
 		cases[ligne][colonne] = piece;
 	}
 	
+	/*
+	 Une méthode pour récupérer la liste des pièces blanches ou noires
+	 */
 	public ArrayList<Piece> getPieces(boolean blanc){
 		ArrayList<Piece> pieces = new ArrayList<Piece>();
 		for (int ligne = 0 ; ligne < 8 ; ligne++) {
@@ -122,16 +114,26 @@ public class Plateau {
 		return pieces;
 	}
 	
+	/*
+	 Une méthode pour vérifier si une case existe
+	 */
 	public boolean caseExiste(int ligne, int colonne) {
 		return ligne>=0 && ligne<=7 && colonne>=0 && colonne<=7;
 	}
 
+	/*
+	 Une méthode pour récupérer le roi blanc ou noir
+	 */
 	public Roi getRoi(boolean blanc) {
 		if(blanc) {
 			return roiBlanc;
 		}
 		return roiNoir;
 	}
+	
+	/*
+	 Une méthode pour qu'un pion ne puisse plus être pris en passant si le coup adverse joué n'est pas une prise en passant
+	 */
 	
 	public void interdirePriseEnPassant(boolean blanc) {
 		for (int ligne = 0 ; ligne < 8 ; ligne++) {
@@ -148,6 +150,10 @@ public class Plateau {
 			}
 		}
 	}
+	
+	/*
+	 Pour vérifier si un joueur blanc ou noir est en PAT
+	 */
 	
 	public boolean estEnPat(boolean blanc) {
 		if(getRoi(blanc).estEnEchec(this)) {

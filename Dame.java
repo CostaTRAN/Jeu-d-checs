@@ -1,7 +1,8 @@
-
-
 public class Dame extends Piece {
 	
+	/*
+	 Constructeur
+	 */
 	public Dame(boolean blanc, int ligne, int colonne) {
 		super(blanc, ligne, colonne);
 		if (blanc) {
@@ -11,12 +12,17 @@ public class Dame extends Piece {
 		}
 	}
 	
+	/*
+	 Vérification du déplacement de la dame
+	 */
 	public boolean peutSeDeplacer(int ligneArrivee, int colonneArrivee, Plateau plateau) {
 		
+		//On vérifie si sa case d'arrivée est sa case de départ
 		if (this.ligne == ligneArrivee && this.colonne == colonneArrivee) {
 			return false;
 		}
 		
+		//Si le cavalier veut manger une pièce, on vérifie si la pièce d'arrivée est de la même couleur
 		Piece pieceArrivee = plateau.getPiece(ligneArrivee, colonneArrivee);
 		if (pieceArrivee != null) {
 			if(pieceArrivee.isBlanc() == isBlanc()) {
@@ -38,7 +44,6 @@ public class Dame extends Piece {
 		 Si la première vérification est validée alors on reprend les vérifications de la tour et du fou pour voir si une pièce 
 		 se trouve entre la case d'arrivée et la case de départ
 		 */
-	
 		if(colonneArrivee == this.colonne) {
 			if(ligneArrivee > this.ligne) {
 				for(int ligne = this.ligne + 1 ; ligne < ligneArrivee ; ligne++) {

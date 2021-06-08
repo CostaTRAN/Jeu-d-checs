@@ -3,6 +3,9 @@ import java.util.ArrayList;
 public class Roi extends Piece {
 	private boolean premierCoup;
 	
+	/*
+	 Constructeur
+	 */
 	public Roi(boolean blanc, int ligne, int colonne) {
 		super(blanc, ligne, colonne);
 		if (blanc) {
@@ -13,10 +16,16 @@ public class Roi extends Piece {
 		premierCoup = true;
 	}
 	
+	/*
+	 Getter
+	 */
 	public boolean isPremierCoup() {
 		return premierCoup;
 	}
 	
+	/*
+	 Une méthode pour récupérer la tour du grand roque
+	 */
 	private Tour getTourDuGrandRoque(int ligneArrivee, int colonneArrivee, Plateau plateau) {
 		if(!premierCoup || ligneArrivee != this.ligne || colonneArrivee != this.colonne - 2 || estEnEchec(plateau)) {
 			return null;
@@ -61,10 +70,12 @@ public class Roi extends Piece {
 				simulerDeplacement(ligneDepart, colonneDepart, plateau);
 			}
 		}
-		
 		return tour;
 	}
 	
+	/*
+	 Une méthode pour récupérer la tour du petit roque
+	 */
 	private Tour getTourDuPetitRoque(int ligneArrivee, int colonneArrivee, Plateau plateau) {
 		if(!premierCoup || ligneArrivee != this.ligne || colonneArrivee != this.colonne + 2 || estEnEchec(plateau)) {
 			return null;
@@ -113,6 +124,9 @@ public class Roi extends Piece {
 		return tour;
 	}
 	
+	/*
+	 Une méthode pour récupérer l'une des deux tours
+	 */
 	private Tour getTourDuRoque(int ligneArrivee, int colonneArrivee, Plateau plateau) {
 		Tour tourDuGrandRoque = getTourDuGrandRoque(ligneArrivee, colonneArrivee, plateau);
 		if (tourDuGrandRoque != null) {
@@ -127,11 +141,18 @@ public class Roi extends Piece {
 		return null;
 	}
 	
+	/*
+	 Vérification du déplacement du roi
+	 */
 	public boolean peutSeDeplacer(int ligneArrivee, int colonneArrivee, Plateau plateau) {
 		
 		if (this.ligne == ligneArrivee && this.colonne == colonneArrivee) {
 			return false;
 		}
+		
+		/*
+		 Vérification : on ne mange pas ses alliés
+		 */
 		
 		Piece pieceArrivee = plateau.getPiece(ligneArrivee, colonneArrivee);
 		if (pieceArrivee != null) {
@@ -192,6 +213,9 @@ public class Roi extends Piece {
 		return false;
 	}
 	
+	/*
+	 Une méthode pour vérifier si le roi est en échec
+	 */
 	public boolean estEnEchec(Plateau plateau) {
 		ArrayList<Piece> piecesAdversaire = plateau.getPieces(!blanc);
 		for(Piece pieceAdversaire : piecesAdversaire) {
@@ -202,6 +226,9 @@ public class Roi extends Piece {
 		return false;
 	}
 	
+	/*
+	 Une méthode pour vérifier si le roi est en échec et mat
+	 */
 	public boolean estEnEchecEtMat(Plateau plateau) {
 		if(!this.estEnEchec(plateau)) {
 			return false;
@@ -228,10 +255,12 @@ public class Roi extends Piece {
 				}
 			}
 		}
-		
 		return true;
 	}
 	
+	/*
+	 On réécrit la méthode déplacer pour l'adapter aux déplacements du roi
+	 */
 	public void deplacer(Coup coup, Plateau plateau, ArrayList<Coup> historiqueDesCoups) {
 		
 		Tour tourDuGrandRoque = getTourDuGrandRoque(coup.getLigneArrivee(), coup.getColonneArrivee(), plateau);

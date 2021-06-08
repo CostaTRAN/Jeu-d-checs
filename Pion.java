@@ -21,6 +21,9 @@ public class Pion extends Piece {
 		peutEtrePrisEnPassant = false;
 	}
 	
+	/*
+	 Getters et setters
+	 */
 	public boolean getPeutEtrePrisEnPassant() {
 		return peutEtrePrisEnPassant;
 	}
@@ -29,7 +32,10 @@ public class Pion extends Piece {
 		this.peutEtrePrisEnPassant = peutEtrePrisEnPassant;
 	}
 	
-	private Pion getPionPriseEnPassant(int ligneArrivee, int colonneArrivee, Plateau plateau) {
+	/*
+	 Une méthode pour récupérer le pion qui peut être prise en passant
+	 */
+	private Pion getPionPrisEnPassant(int ligneArrivee, int colonneArrivee, Plateau plateau) {
 		if (this.ligne == ligneArrivee && this.colonne == colonneArrivee) {
 			return null;
 		}
@@ -70,14 +76,13 @@ public class Pion extends Piece {
 			if (pionPriseEnPassant.getPeutEtrePrisEnPassant()) {
 				return pionPriseEnPassant;
 			}
-
 			return null;
 		}
 		return null;
 	}
 	
 	/*
-	 Une méthode pour vérifier si il peut se déplacer
+	 Une méthode pour vérifier le déplacement du pion
 	 */
 
 	public boolean peutSeDeplacer(int ligneArrivee, int colonneArrivee, Plateau plateau) {
@@ -111,7 +116,7 @@ public class Pion extends Piece {
 			/*
 			 On vérifie la prise en passant
 			 */
-			return getPionPriseEnPassant(ligneArrivee, colonneArrivee, plateau) != null;
+			return getPionPrisEnPassant(ligneArrivee, colonneArrivee, plateau) != null;
 		}
 		
 		/*
@@ -151,10 +156,16 @@ public class Pion extends Piece {
 		}
 	}
 	
+	/*
+	 Une méthode pour vérifier si le pion arrive au bout du plateau
+	 */
 	private boolean peutEtrePromu() {
 		return (blanc && ligne == 7) || (!blanc && ligne == 0);
 	}
 	
+	/*
+	 Une méthode pour recharger ou initialiser la promotion d'un pion
+	 */
 	private void verifierPromotion(Plateau plateau, ArrayList<Coup> historiqueDesCoups) {
 		if(!peutEtrePromu()) {
 			return;
@@ -218,11 +229,14 @@ public class Pion extends Piece {
 		}
 	}
 	
+	/*
+	 La méthode déplacer est réécrite pour l'adapter aux déplacements du pion
+	 */
 	public void deplacer(Coup coup, Plateau plateau, ArrayList<Coup> historiqueDesCoups) {
 		int ligneDepart = this.ligne;
 		int colonneDepart = this.colonne;
 		
-		Pion pionPriseEnPassant = getPionPriseEnPassant(coup.getLigneArrivee(), coup.getColonneArrivee(), plateau);
+		Pion pionPriseEnPassant = getPionPrisEnPassant(coup.getLigneArrivee(), coup.getColonneArrivee(), plateau);
 		
 		super.deplacer(coup, plateau, historiqueDesCoups);
 
@@ -234,7 +248,7 @@ public class Pion extends Piece {
 						peutEtrePrisEnPassant = true;
 					}
 				} else {
-					if(coup.getLigneArrivee() == ligneDepart -2 ) {
+					if(coup.getLigneArrivee() == ligneDepart - 2) {
 						peutEtrePrisEnPassant = true;
 					}
 				}

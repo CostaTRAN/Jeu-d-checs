@@ -22,41 +22,29 @@ public abstract class Piece {
 	}
 	
 	/*
-	 Getters et setters
+	 Getters
 	 */
 	
 	public int getLigne() {
 		return ligne;
 	}
 
-	public void setLigne(int ligne) {
-		this.ligne = ligne;
-	}
-
 	public int getColonne() {
 		return colonne;
-	}
-
-	public void setColonne(int colonne) {
-		this.colonne = colonne;
 	}
 
 	public boolean isBlanc() {
 		return this.blanc;
 	}
 
-	public void setBlanc(boolean blanc) {
-		this.blanc = blanc;
-	}
-
-	public void setSymbole(String symbole) {
-		this.symbole = symbole;
-	}
-	
 	public String getSymbole() {
 		return this.symbole;
 	}
 	
+	/*
+	 Une méthode pour le déplacement des pièces, on met la pièce sur la case d'arrivée, on retire la pièce de départ pour éviter les doublons,
+	 le coup est ajouté dans l'historique des coups, on écrase la ligne et colonne de départ par la ligne et colonne d'arrivée
+	 */
 	public void deplacer(Coup coup, Plateau plateau, ArrayList<Coup> historiqueDesCoups) {
 		plateau.setPiece(coup.getLigneArrivee(), coup.getColonneArrivee(), this);
 		plateau.setPiece(ligne, colonne, null);
@@ -66,7 +54,7 @@ public abstract class Piece {
 	}
 	
 	/*
-	 Ne pas surcharger simulerDeplacement
+	 Une méthode pour simuler un déplacement qui sert dans d'autres méthodes
 	 */
 	
 	public void simulerDeplacement(int ligneArrivee, int colonneArrivee, Plateau plateau) {
@@ -76,8 +64,14 @@ public abstract class Piece {
 		colonne = colonneArrivee;
 	}
 	
+	/*
+	 Une méthode abstraite qui est définit dans les classes filles permettant de vérifier le déplacement du type de la pièce
+	 */
 	public abstract boolean peutSeDeplacer(int ligneArrivee, int colonneArrivee, Plateau plateau);
 	
+	/*
+	 Une méthode pour récupérer tous les coups possibles dans un plateau
+	 */
 	public ArrayList<Coup> getCoupsPossibles(Plateau plateau){
 		ArrayList<Coup> coupsPossibles = new ArrayList<Coup>();
 		for(int ligne = 0 ; ligne < 8 ; ligne++) {
